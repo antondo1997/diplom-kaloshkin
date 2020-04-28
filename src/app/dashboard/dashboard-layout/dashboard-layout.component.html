@@ -1,0 +1,46 @@
+<nav class="navbar navbar-dark bg-primary flex-md-nowrap">
+  <a routerLink="/dashboard" class="navbar-brand mb-0">ООО Интеграл</a>
+  <ul class="navbar-nav" style="">
+    <!--    <li class="nav-item" routerLinkActive="active">-->
+    <!--      <a routerLink="/dashboard" class="nav-link">Home</a>-->
+    <!--    </li>-->
+    <li class="nav-item" routerLinkActive="active">
+      <a [routerLink]="['/dashboard', 'shopping-cart']" class="nav-link active">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
+    </li>
+    <li class="nav-item ml-4">
+      <a routerLink="/" class="nav-link active">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row flex-xl-nowrap">
+    <div class="sidebar">
+      <ul class="nav flex-column pt-5">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a routerLink="/dashboard" class="nav-link">Price List</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/dashboard/user-profile" class="nav-link">Мой профиль</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/dashboard/orders" class="nav-link">Заказы</a>
+        </li>
+      </ul>
+    </div>
+
+    <main class="col-xl-10 col-md-9 py-md-3 pl-md-5">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>
+
+<!--<nav class="navbar fixed-bottom navbar-dark bg-primary">-->
+<!--  <a class="navbar-brand" href="#">Fixed bottom</a>-->
+<!--</nav>-->
+

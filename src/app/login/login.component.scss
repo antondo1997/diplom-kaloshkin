@@ -1,0 +1,19 @@
+.container-login {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  //background-color: aquamarine;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.btn {
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
