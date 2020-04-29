@@ -1,12 +1,16 @@
-<h1>Корзина</h1>
-<div class="bg-light border rounded shadow p-3 mb-5 " *ngIf="database && inputs">
+<div *ngIf="!products.length">
+  <h1>Корзина пуста</h1>
+  <a routerLink="/dashboard">Перейти в прайс-лист</a>
+</div>
+<h1 *ngIf="products.length && inputs.length">Корзина</h1>
+<div class="bg-light border rounded shadow p-3 mb-5 " *ngIf="products.length && inputs.length">
   <div class="table-responsive">
     <table class="table table-hover">
       <thead class="thead-dark">
       <tr class="d-flex text-center">
-        <th class="col-1">#</th>
-        <th class="col-5">Наименование</th>
-        <th class="col-2">Количество</th>
+        <th class="col">#</th>
+        <th class="col-4">Наименование</th>
+        <th class="col-2">Количество на складе</th>
         <th class="col">Цена</th>
         <th class="col-2">В корзине</th>
         <th class="col">Всего</th>
@@ -14,26 +18,35 @@
       </tr>
       </thead>
       <tbody>
-      <tr class="d-flex text-center" *ngFor="let item of database; let i = index">
-        <th class="col-1">{{ i + 1}}</th>
-        <td class="col-5 text-left"><a [routerLink]="['/dashboard/product', item.id]">{{ item.name }}</a></td>
-        <td class="col-2" style="display: flex;  justify-content: center;  align-content: center; flex-direction: column;">{{ item.quantity }}</td>
-        <td class="col" style="vertical-align: middle;">{{ item.price }}</td>
+      <tr class="d-flex text-center" *ngFor="let product of products; let i = index">
+        <th class="col">{{ i + 1}}</th>
+        <td class="col-4 text-left"><a [routerLink]="['/dashboard/product', product.id]">{{ product.name }}</a></td>
+        <td class="col-2" style="display: flex;  justify-content: center;  align-content: center; flex-direction: column;">{{ product.quantity }}</td>
+        <td class="col" style="vertical-align: middle;">{{ product.price }} р.</td>
         <td class="col-2 flex-row">
-          <a (click)="decrease(i)"><i class="fas fa-long-arrow-alt-down"></i></a>
-          <a (click)="increase(i)"><i class="fas fa-long-arrow-alt-up"></i></a>
+          <a (click)="decrease(product.id, i)"><i class="fas fa-long-arrow-alt-down"></i></a>
+          <a (click)="increase(product.id, i)"><i class="fas fa-long-arrow-alt-up"></i></a>
           <input type="number" class="form-control" style="" readonly
                  [(ngModel)]="inputs[i]">
 <!--          <a (click)="addToCart(item.id, i)"><i class="fas fa-cart-plus"></i></a>-->
         </td>
-        <td class="col">{{inputs[i] * item.price}}$</td>
-        <td class="col"><a (click)="deleteItem(i)"><i class="fas fa-times"></i></a></td>
+        <td class="col">{{inputs[i] * product.price}} р.</td>
+        <td class="col"><a (click)="deleteItem(product.id, i)"><i class="fas fa-times"></i></a></td>
+      </tr>
+      <tr class="d-flex text-center">
+        <th class="col"></th>
+        <th class="col-4"></th>
+        <th class="col-2"></th>
+        <th class="col"></th>
+        <th class="col-2">Всего:</th>
+        <th class="col">{{ cartSum }} р.</th>
+        <th class="col"></th>
       </tr>
       </tbody>
     </table>
   </div>
-  <div>
-    Всего: {{ cartSum }}$
+  <div class="text-center">
+    <button class="btn btn-success" (click)="checkout()">Оформить заказ</button>
   </div>
 </div>
 

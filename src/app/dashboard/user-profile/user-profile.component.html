@@ -1,5 +1,10 @@
 <h1>Мой профиль <i class="fas fa-address-card"></i></h1>
-<div class="col-xl-10 bg-light border rounded shadow p-3 mb-5">
+<div *ngIf="isLoading">
+  <div class="spinner-border" role="status">
+  </div>
+  <span class="">Loading...</span>
+</div>
+<div class="col-xl-10 bg-light border rounded shadow p-3 mb-5" *ngIf="!isLoading">
   <form [formGroup]="form" (ngSubmit)="submit()">
 
     <div class="row">
@@ -7,7 +12,7 @@
         <div class="form-group">
           <label for="email">Email:</label>
           <input type="email" id="email" class="form-control" formControlName="email" placeholder="Электронная почта"
-                 [ngClass]="{'is-invalid': form.get('email').touched && form.get('email').invalid}">
+                 [ngClass]="{'is-invalid': form.get('email').touched && form.get('email').invalid}" readonly>
         </div>
       </div>
     </div>
