@@ -1,15 +1,5 @@
-i {
-  font-size: 20px;
-  //padding: 0 10px;
-  cursor: pointer;
-}
-
 .modal-dialog {
   margin-top: 200px;
-
-  img {
-    max-height: 200px;
-  }
 
   input {
     width: 60px;
@@ -24,8 +14,8 @@ i {
   }
 
   a {
-    padding-right:.5rem;
-    padding-left:.5rem;
+    padding-right: .5rem;
+    padding-left: .5rem;
   }
 
   .col, a {
@@ -36,4 +26,3 @@ i {
   }
 
 }
-

@@ -20,5 +20,13 @@ export interface FbAuthResponse {
 export interface CartItem {
   id: string;
   amount: number;
-  idFb?: string;
+  // idFb?: string;
+}
+
+export interface Order {
+  cartList: CartItem[];
+  cartSum: number;
+  totalAmount: number;
+  date: Date;
+  id?: string;
 }

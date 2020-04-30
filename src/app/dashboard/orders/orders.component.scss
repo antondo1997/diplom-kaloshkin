@@ -1,0 +1,31 @@
+i {
+  font-size: 20px;
+  //padding: 0 10px;
+  cursor: pointer;
+}
+
+input {
+  width: 60px;
+  display: inline-block;
+  text-align: center;
+  //padding-left: 15px;
+  //vertical-align: center;
+
+  &[readonly] {
+    background-color: white;
+  }
+}
+
+table {
+  th, td, a {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+  }
+
+  a {
+    padding-right:.5rem;
+    padding-left:.5rem;
+  }
+}

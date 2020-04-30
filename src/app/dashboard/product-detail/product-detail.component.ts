@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {BsModalRef} from 'ngx-bootstrap/modal';
-import {Product} from '../price-list/DATABASE';
+import {Product} from '../price-list/database';
 import {CartService} from '../services/cart.service';
 
 @Component({

@@ -1,7 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DATABASE, Product} from '../price-list/DATABASE';
+import {Database, Product} from '../price-list/database';
 import {CartService} from '../services/cart.service';
 import {Subscription} from 'rxjs';
+import {AlertService} from '../services/alert.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,7 +19,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   cartSub: Subscription;
 
   constructor(
-    private cartService: CartService
+    private cartService: CartService,
+    private alertService: AlertService,
+    private router: Router
   ) {
   }
 
@@ -27,16 +31,14 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.cartSub = this.cartService.getCartList()
       .subscribe((cartItems) => {
         if (cartItems) {
-          cartItems.forEach((item) => {
-            this.products.push(DATABASE[item.id]);
+          cartItems.forEach((item, i) => {
+            this.products.push(Database[item.id]);
             this.inputs.push(item.amount);
-            this.cartSummary();
+            this.cartSum += item.amount * this.products[i].price;
           });
         }
 
       });
-
-    // this.inputs = Array<number>(this.cartService.getCartList().length).fill(1);
   }
 
   increase(id: string, idx: number) {
@@ -66,17 +68,23 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   cartSummary() {
     this.cartSum = 0;
-    this.inputs.forEach((value, i) => {
-      this.cartSum += value * this.products[i].price;
+    this.inputs.forEach((amount, i) => {
+      this.cartSum += amount * this.products[i].price;
     });
   }
 
   checkout() {
     console.log('Checkout', this.products);
+    this.cartService.checkout(this.cartSum)
+      .subscribe((data) => {
+        this.cartService.deleteCart();
+        this.alertService.success('Заказ успешно оформлен', 3500);
+        this.router.navigate(['/dashboard/orders']);
+      });
   }
 
   ngOnDestroy(): void {
-    if (this.cartSub){
+    if (this.cartSub) {
       this.cartSub.unsubscribe();
     }
   }

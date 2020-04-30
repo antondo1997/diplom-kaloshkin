@@ -1,1 +1,45 @@
-<p>orders works!</p>
+<h1>Заказы</h1>
+<div *ngIf="isLoading">
+  <div class="spinner-border" role="status">
+  </div>
+  <span class="">Loading...</span>
+</div>
+<div *ngIf="!orders && !isLoading">
+  <h1>Заказов нет</h1>
+  <a routerLink="/dashboard">Перейти в прайс-лист</a>
+</div>
+<div class="bg-light border rounded shadow p-3 mb-5 " *ngIf="orders && !isLoading">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-dark">
+      <tr class="d-flex text-center">
+        <th class="col-3">ID заказа</th>
+        <th class="col-3">Дата</th>
+        <th class="col-2">Количество товаров</th>
+        <th class="col-1">Сумма</th>
+        <th class="col">Статус</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="d-flex text-center" *ngFor="let order of orders; let i = index">
+        <th class="col-3">
+          <button class="btn btn-link" (click)="openOrderDetail(order.id)">{{ order.id }}</button>
+        </th>
+        <td class="col-3">{{ order.date | date: 'd.MM.y, H:mm': null: 'ru' }}</td>
+        <td class="col-2"
+            style="display: flex;  justify-content: center;  align-content: center; flex-direction: column;">{{ order.totalAmount }}</td>
+        <td class="col-1" style="vertical-align: middle;">{{ order.cartSum }} р.</td>
+        <td class="col">
+          Статус обновлен
+          <!--          <a (click)="decrease(i)"><i class="fas fa-long-arrow-alt-down"></i></a>-->
+          <!--          <a (click)="increase(i)"><i class="fas fa-long-arrow-alt-up"></i></a>-->
+          <!--          <input type="number" class="form-control" readonly-->
+          <!--                 [(ngModel)]="inputs[i]">-->
+          <!--          <a (click)="addToCart(item.id, i)"><i class="fas fa-cart-plus"></i></a>-->
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

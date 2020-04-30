@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {CartItem} from '../../shared/interfaces';
+import {CartItem, Order} from '../../shared/interfaces';
 import {first, map} from 'rxjs/operators';
 
 @Injectable()
@@ -70,11 +70,29 @@ export class CartService {
   }
 
   deleteItem(id: string, idx: number) {
-    this.cartList = this.cartList.filter((item) => item.id !== id);
-    console.log(this.cartList);
+    // console.log(this.cartList);
     this.http.delete(`${environment.databaseURL}/cart/${idx}.json`)
       .subscribe((response) => {
-        console.log('Res Delete:', response);
+        // console.log('Item:', response);
+        this.cartList = this.cartList.filter((item) => item.id !== id);
+        this.cartBadge$.next(this.totalAmount());
+      });
+  }
+
+  checkout(cartSum: number) {
+    const order: Order = {
+      cartList: this.cartList,
+      cartSum,
+      totalAmount: this.totalAmount(),
+      date: new Date()
+    };
+    return this.http.post(`${environment.databaseURL}/orders.json`, order);
+  }
+
+  deleteCart() { // delete cart after checkout
+    this.http.delete(`${environment.databaseURL}/cart.json`)
+      .subscribe(() => {
+        this.cartList = [];
         this.cartBadge$.next(this.totalAmount());
       });
   }
