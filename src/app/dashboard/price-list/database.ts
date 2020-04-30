@@ -12,7 +12,7 @@ export interface Product {
   features: ProductFeature[];
 }
 
-export const Database: Product[] = [
+export const DATABASE: Product[] = [
   {
     id: '0', name: 'МОНИТОР МЕДИЦИНСКИЙ «ИНТЕГРАЛ»', imgLink: 'https://integral.by/sites/default/files/monitor.gif',
     quantity: 4, price: 123,

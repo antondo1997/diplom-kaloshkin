@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {CartItem, Order} from '../../shared/interfaces';
 import {first, map} from 'rxjs/operators';
+import {AlertService} from './alert.service';
+import {DATABASE} from '../price-list/database';
 
 @Injectable()
 export class CartService {
@@ -13,7 +15,8 @@ export class CartService {
   public cartBadge$: Subject<number> = new Subject<number>();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private alertService: AlertService
   ) {
   }
 
@@ -29,9 +32,10 @@ export class CartService {
     }
     this.http.patch(`${environment.databaseURL}/cart.json`, {...this.cartList})
       .subscribe((response) => {
-        console.log(response);
+        // console.log(response);
+        this.cartBadge$.next(this.totalAmount());
+        this.alertService.success(`Товар ${DATABASE[+id].name} довален в корзину`);
       });
-    this.cartBadge$.next(this.totalAmount());
     console.log('Cart List:', this.cartList);
   }
 
@@ -92,7 +96,7 @@ export class CartService {
   deleteCart() { // delete cart after checkout
     this.http.delete(`${environment.databaseURL}/cart.json`)
       .subscribe(() => {
-        this.cartList = [];
+        this.cartList.splice(0, this.cartList.length);
         this.cartBadge$.next(this.totalAmount());
       });
   }

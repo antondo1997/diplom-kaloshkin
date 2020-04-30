@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Database, Product} from '../price-list/database';
+import {DATABASE, Product} from '../price-list/database';
 import {CartService} from '../services/cart.service';
 import {Subscription} from 'rxjs';
 import {AlertService} from '../services/alert.service';
@@ -32,7 +32,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       .subscribe((cartItems) => {
         if (cartItems) {
           cartItems.forEach((item, i) => {
-            this.products.push(Database[item.id]);
+            this.products.push(DATABASE[item.id]);
             this.inputs.push(item.amount);
             this.cartSum += item.amount * this.products[i].price;
           });
@@ -81,6 +81,12 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.alertService.success('Заказ успешно оформлен', 3500);
         this.router.navigate(['/dashboard/orders']);
       });
+  }
+
+  deleteCart() {
+    this.cartService.deleteCart();
+    this.products.splice(0, this.products.length);
+    this.alertService.success('Корзина удалена');
   }
 
   ngOnDestroy(): void {

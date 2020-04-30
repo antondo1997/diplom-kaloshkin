@@ -13,13 +13,25 @@ export interface Alert {
 export class AlertService {
 
   public alert$ = new Subject<Alert>();
+  defaultTimeout = 3000;
 
   constructor() {
   }
 
-  success(msg: string, timeout: number) {
-    // console.log(msg);
+  success(msg: string, timeout = this.defaultTimeout) {
     this.alert$.next({type: 'success', msg, timeout});
+  }
+
+  info(msg: string, timeout = this.defaultTimeout) {
+    this.alert$.next({type: 'info', msg, timeout});
+  }
+
+  warning(msg: string, timeout = this.defaultTimeout) {
+    this.alert$.next({type: 'warning', msg, timeout});
+  }
+
+  danger(msg: string, timeout = this.defaultTimeout) {
+    this.alert$.next({type: 'danger', msg, timeout});
   }
 
 }

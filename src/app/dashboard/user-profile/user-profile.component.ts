@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserProfile} from '../../shared/interfaces';
 import {ProfileService} from '../services/profile.service';
 import {Router} from '@angular/router';
+import {AlertService} from '../services/alert.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,7 +19,8 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {
   }
 
@@ -66,7 +68,7 @@ export class UserProfileComponent implements OnInit {
       telephone: this.form.value.telephone,
     };
     this.profileService.saveProfile(updateUserProfile).subscribe(() => {
-      console.log('Profile saved!');
+      this.alertService.success('Профиль сохранен', 3000);
       // this.router.navigate()
     });
   }

@@ -2,7 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Order} from '../../../shared/interfaces';
 import {BsModalRef} from 'ngx-bootstrap/modal';
 import {OrderService} from '../../services/order.service';
-import {Database, Product} from '../../price-list/database';
+import {DATABASE, Product} from '../../price-list/database';
 
 @Component({
   selector: 'app-order-detail',
@@ -24,7 +24,7 @@ export class OrderDetailComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.order);
     this.order.cartList.forEach((cartItem, i) => {
-      this.products.push(Database[cartItem.id]);
+      this.products.push(DATABASE[cartItem.id]);
       // this.cartSum += cartItem.amount * this.products[i].price;
     });
   }

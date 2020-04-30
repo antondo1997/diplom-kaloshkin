@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Database, Product} from './database';
+import {DATABASE, Product} from './database';
 import {CartService} from '../services/cart.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {ProductDetailComponent} from '../product-detail/product-detail.component';
@@ -22,8 +22,8 @@ export class PriceListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.database = Database;
-    this.inputs = Array<number>(Database.length).fill(1);
+    this.database = DATABASE;
+    this.inputs = Array<number>(DATABASE.length).fill(1);
   }
 
   addToCart(id: string, idx: number) {
