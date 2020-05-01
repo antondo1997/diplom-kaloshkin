@@ -21,6 +21,7 @@ import {AuthInterceptor} from '../shared/auth/auth.interceptor';
 import {AlertService} from './services/alert.service';
 import {OrderService} from './services/order.service';
 import {OrderDetailComponent} from './orders/order-detail/order-detail.component';
+import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
 
 registerLocaleData(ruLocale, 'ru');
 
@@ -38,7 +39,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     OrdersComponent,
     ShoppingCartComponent,
     UserProfileComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
+    ConfirmModalComponent
   ],
   imports: [
     DashboardRoutingModule,

@@ -4,7 +4,7 @@
 </div>
 <h1 *ngIf="products.length && inputs.length" class="d-flex justify-content-between">
   Корзина
-  <button class="btn btn-danger" (click)="deleteCart()">Удалить корзину</button>
+  <button class="btn btn-danger" (click)="confirmDeleteCart()">Удалить корзину</button>
 </h1>
 <div class="bg-light border rounded shadow p-3 mb-5 " *ngIf="products.length && inputs.length">
   <div class="table-responsive">

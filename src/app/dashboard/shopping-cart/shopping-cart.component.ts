@@ -4,6 +4,8 @@ import {CartService} from '../services/cart.service';
 import {Subscription} from 'rxjs';
 import {AlertService} from '../services/alert.service';
 import {Router} from '@angular/router';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {ConfirmModalComponent} from '../shared/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,6 +14,8 @@ import {Router} from '@angular/router';
 })
 export class ShoppingCartComponent implements OnInit, OnDestroy {
 
+  bsModalRef: BsModalRef;
+  bsModalRefSub: Subscription;
   products: Product[] = [];
   // list: { id: string, amount: number }[];
   inputs: number[] = [];
@@ -21,7 +25,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   constructor(
     private cartService: CartService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private modalService: BsModalService
   ) {
   }
 
@@ -85,13 +90,26 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   deleteCart() {
     this.cartService.deleteCart();
-    this.products.splice(0, this.products.length);
-    this.alertService.success('Корзина удалена');
+
+  }
+
+  confirmDeleteCart() {
+    const initialState = {type: 'cart'};
+    this.bsModalRef = this.modalService.show(ConfirmModalComponent, {initialState});
+    this.bsModalRefSub = this.bsModalRef.content.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.products.splice(0, this.products.length);
+        this.alertService.success('Корзина удалена');
+      }
+    });
   }
 
   ngOnDestroy(): void {
     if (this.cartSub) {
       this.cartSub.unsubscribe();
+    }
+    if (this.bsModalRefSub) {
+      this.bsModalRefSub.unsubscribe();
     }
   }
 }

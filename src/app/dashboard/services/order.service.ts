@@ -29,4 +29,8 @@ export class OrderService {
   getById(id: string): Observable<Order> {
     return this.http.get<Order>(`${environment.databaseURL}/orders/${id}.json`);
   }
+
+  delete(id: string) {
+    return this.http.delete(`${environment.databaseURL}/orders/${id}.json`);
+  }
 }

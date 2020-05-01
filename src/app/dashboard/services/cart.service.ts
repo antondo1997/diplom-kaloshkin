@@ -3,7 +3,7 @@ import {Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {CartItem, Order} from '../../shared/interfaces';
-import {first, map} from 'rxjs/operators';
+import {first, map, tap} from 'rxjs/operators';
 import {AlertService} from './alert.service';
 import {DATABASE} from '../price-list/database';
 
@@ -94,11 +94,13 @@ export class CartService {
   }
 
   deleteCart() { // delete cart after checkout
-    this.http.delete(`${environment.databaseURL}/cart.json`)
-      .subscribe(() => {
-        this.cartList.splice(0, this.cartList.length);
-        this.cartBadge$.next(this.totalAmount());
-      });
+    return this.http.delete(`${environment.databaseURL}/cart.json`)
+      .pipe(
+        tap(() => {
+          this.cartList.splice(0, this.cartList.length);
+          this.cartBadge$.next(this.totalAmount());
+        })
+      );
   }
 
 }
