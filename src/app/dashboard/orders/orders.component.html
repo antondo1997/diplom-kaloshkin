@@ -26,10 +26,10 @@
         <th class="col-3">
           <button class="btn btn-link" (click)="openOrderDetail(order.id)">{{ order.id }}</button>
         </th>
-        <td class="col-3">{{ order.date | date: 'd.MM.y, H:mm': null: 'ru' }}</td>
+        <td class="col-3">{{ order.date | date: 'dd.MM.y, H:mm': null: 'ru' }}</td>
         <td class="col-2"
             style="display: flex;  justify-content: center;  align-content: center; flex-direction: column;">{{ order.totalAmount }}</td>
-        <td class="col-1" style="vertical-align: middle;">{{ order.cartSum }} р.</td>
+        <td class="col-1" style="vertical-align: middle;">{{ order.cartSum | number }} р.</td>
         <td class="col">Статус обновлен</td>
         <td class="col-1">
           <button

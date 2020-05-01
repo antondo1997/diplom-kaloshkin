@@ -10,7 +10,7 @@
   </div>
   <div class="row text-center m-4">
     <div class="col">
-      Цена: {{ product.price }} р.
+      Цена: {{ product.price | number }} р.
     </div>
     <div class="col flex-row">
       <a (click)="decrease()"><i class="fas fa-long-arrow-alt-down"></i></a>

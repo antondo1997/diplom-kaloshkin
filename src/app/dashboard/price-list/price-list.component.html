@@ -19,7 +19,7 @@
           <span *ngIf="item.quantity > 0">{{ item.quantity }}</span>
           <span *ngIf="item.quantity === 0">Нет в наличии</span>
         </td>
-        <td class="col-1" style="vertical-align: middle;">{{ item.price }} р.</td>
+        <td class="col-1" style="vertical-align: middle;">{{ item.price | number }} р.</td>
         <td class="col-2" *ngIf="item.quantity === 0"></td>
         <td class="col-2 flex-row" *ngIf="item.quantity > 0">
           <a (click)="decrease(i)"><i class="fas fa-long-arrow-alt-down"></i></a>

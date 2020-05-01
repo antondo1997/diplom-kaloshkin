@@ -15,7 +15,7 @@ export interface Product {
 export const DATABASE: Product[] = [
   {
     id: '0', name: 'МОНИТОР МЕДИЦИНСКИЙ «ИНТЕГРАЛ»', imgLink: 'https://integral.by/sites/default/files/monitor.gif',
-    quantity: 4, price: 123,
+    quantity: 7, price: 6500,
     features: [
       {name: 'ЭКГ кабель пациента', value: '3 проводной/5 проводной'},
       {name: 'Количество отведений измерения ЭКГ', value: '3/7'},
@@ -28,7 +28,7 @@ export const DATABASE: Product[] = [
   },
   {
     id: '1', name: 'ТЕРМОМЕТР ЭЛЕКТРОННЫЙ "ИНТЕГРАЛ ТЭ-04"', imgLink: 'https://integral.by/sites/default/files/termometr_integral_te06.gif',
-    quantity: 9, price: 12,
+    quantity: 75, price: 8,
     features: [
       {name: 'Диапазон измеряемых температур, °C', value: 'от 32,0 до 42,0'},
       {name: 'Абсолютная погрешность измерений, °C', value: '±0,10'},
@@ -38,7 +38,7 @@ export const DATABASE: Product[] = [
   },
   {
     id: '2', name: 'ИНДИКАТОР ПИКОВОЙ СКОРОСТИ ВЫДОХА', imgLink: 'https://integral.by/sites/default/files/ipsv_1.jpg',
-    quantity: 7, price: 65,
+    quantity: 45, price: 12,
     features: [
       {name: 'Тип прибора', value: 'Механический, объемный'},
       {name: 'Диапазон показаний', value: 'Цветовая шкала'},
@@ -51,7 +51,7 @@ export const DATABASE: Product[] = [
   },
   {
     id: '3', name: 'АППАРАТ ИСКУССТВЕННОЙ ВЕНТИЛЯЦИИ ЛЕГКИХ «ИВЛ ИНТЕГРАЛ»', imgLink: 'https://integral.by/sites/default/files/15_1.gif',
-    quantity: 10, price: 321,
+    quantity: 10, price: 45000,
     features: [
       {name: 'Концентрация О2, %', value: 'от 21 до 100'},
       {name: 'Время вдоха, с', value: 'от 0,1 до 3,0'},
@@ -65,7 +65,7 @@ export const DATABASE: Product[] = [
   },
   {
     id: '4', name: 'АППАРАТ МОБИЛЬНЫЙ ИСКУССТВЕННОЙ ВЕНТИЛЯЦИИ ЛЁГКИХ', imgLink: 'https://integral.by/sites/default/files/17.jpg',
-    quantity: 32, price: 99,
+    quantity: 32, price: 15000,
     features: [
       {name: 'Частота дыхания, мин-1', value: 'от 5 до 70'},
       {name: 'Предел давления, мбар', value: 'от 5 до 50'},
@@ -80,7 +80,7 @@ export const DATABASE: Product[] = [
     id: '5',
     name: 'ГЕНЕРАТОР ЭЛЕКТРОХИРУРГИЧЕСКИЙ «ЭХГ ИНТЕГРАЛ»',
     imgLink: 'https://integral.by/sites/default/files/generator_elektrohirurgicheskii1.gif',
-    quantity: 0, price: 66,
+    quantity: 44, price: 7000,
     features: [
       {name: 'Напряжение питания от сети переменного тока частотой 50, В', value: '230±23'},
       {name: 'Максимальная потребляемая мощность, Вт, не более', value: '800'},
@@ -95,7 +95,7 @@ export const DATABASE: Product[] = [
     id: '6',
     name: 'ДОЗАТОР ЭЛЕКТРОННЫЙ АВТОМАТИЧЕСКИЙ ДЭА-100',
     imgLink: 'https://integral.by/sites/default/files/dozator_elektronnii_dea100.gif',
-    quantity: 9, price: 43,
+    quantity: 0, price: 500,
     features: [
       {name: 'Диапазон установки скорости инфузии (дискретность 0,1 мл/ч), мл/ч', value: '0,1 – 1500'},
       {name: 'Диапазон установки объема вводимой жидкости (дискретность 0,1 мл), мл', value: '0,1 – 999,9'},
@@ -108,7 +108,7 @@ export const DATABASE: Product[] = [
   },
   {
     id: '7', name: 'ИЗМЕРИТЕЛЬ АРТЕРИАЛЬНОГО ДАВЛЕНИЯ ИАД-05', imgLink: 'https://integral.by/sites/default/files/49_1.jpg',
-    quantity: 23, price: 55,
+    quantity: 23, price: 95,
     features: [
       {name: 'Вес с элементом питания (без манжеты), г', value: '500'},
       {name: 'Размер (без манжеты), мм', value: '147 х 105 х 80'},
@@ -120,7 +120,7 @@ export const DATABASE: Product[] = [
   },
   {
     id: '8', name: 'КОЙКА БОЛЬНИЧНАЯ «ИНТЕГРАЛ» КБМ-01', imgLink: 'https://integral.by/sites/default/files/kbm.gif',
-    quantity: 0, price: 0,
+    quantity: 34, price: 1800,
     features: [
       {name: 'Длина койки, мм, не более', value: '2115'},
       {name: 'Ширина койки, мм, не более', value: '1080'},
@@ -133,7 +133,7 @@ export const DATABASE: Product[] = [
   },
   {
     id: '9', name: 'КАТАЛКА "ИНТЕГРАЛ КЭМ"', imgLink: 'https://integral.by/sites/default/files/36_1.jpg',
-    quantity: 35, price: 234,
+    quantity: 35, price: 4000,
     features: [
       {name: 'Регулировка высоты ложа каталки от уровня пола, мм', value: 'от 500 до 900'},
       {name: 'Угол наклона секции опоры спины, град.', value: 'от 0 до 70'},

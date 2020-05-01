@@ -2,29 +2,13 @@
   <h4 class="modal-title pull-left">
     ID заказа: {{order.id}}
     <br>
-    Время заказа: {{ order.date | date: 'EEEE, d MMMM y, H:mm:ss': null: 'ru' | titlecase }}
+    Время заказа: {{ order.date | date: 'EEEE, dd MMMM y, H:mm:ss': null: 'ru' | titlecase }}
   </h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <!--  <div class="text-center m-4">-->
-  <!--    <img [src]="product.imgLink" class="img-fluid" alt="Responsive image">-->
-  <!--  </div>-->
-  <!--  <div class="row text-center m-4">-->
-  <!--    <div class="col">-->
-  <!--      Цена: {{ product.price }} р.-->
-  <!--    </div>-->
-  <!--    <div class="col flex-row">-->
-  <!--      <a (click)="decrease()"><i class="fas fa-long-arrow-alt-down"></i></a>-->
-  <!--      <a (click)="increase()"><i class="fas fa-long-arrow-alt-up"></i></a>-->
-  <!--      <input type="number" class="form-control" readonly-->
-  <!--             [(ngModel)]="input">-->
-  <!--      &lt;!&ndash;      <a (click)="addToCart()"><i class="fas fa-cart-plus"></i></a>&ndash;&gt;-->
-  <!--      <button type="button" class="btn btn-success mx-2" (click)="addToCart(product.id)">Добавить в корзину</button>-->
-  <!--    </div>-->
-  <!--  </div>-->
   <table class="table">
     <thead class="thead-light">
     <tr class="d-flex text-center">
@@ -40,19 +24,16 @@
       <th class="col-1">{{ i + 1 }}</th>
       <td class="col-5 text-left">{{ product.name }}</td>
       <td class="col-2">{{ order.cartList[i].amount }}</td>
-      <td class="col-2">{{ product.price }}</td>
-      <td class="col-2">{{ order.cartList[i].amount * product.price }} р.</td>
+      <td class="col-2">{{ product.price | number }}</td>
+      <td class="col-2">{{ order.cartList[i].amount * product.price | number }} р.</td>
     </tr>
     <tr class="d-flex text-center">
       <th class="col" rowspan="3"></th>
-<!--      <th class="col-5"></th>-->
-<!--      <th class="col-2"></th>-->
+      <!--      <th class="col-5"></th>-->
+      <!--      <th class="col-2"></th>-->
       <th class="col-2">Всего:</th>
-      <th class="col-2">{{ order.cartSum }} р.</th>
+      <th class="col-2">{{ order.cartSum | number }} р.</th>
     </tr>
     </tbody>
   </table>
 </div>
-<!--<div class="modal-footer">-->
-<!--  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Close</button>-->
-<!--</div>-->

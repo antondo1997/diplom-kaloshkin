@@ -26,7 +26,7 @@
         <td class="col-4 text-left"><a [routerLink]="['/dashboard/product', product.id]">{{ product.name }}</a></td>
         <td class="col-2"
             style="display: flex;  justify-content: center;  align-content: center; flex-direction: column;">{{ product.quantity }}</td>
-        <td class="col" style="vertical-align: middle;">{{ product.price }} р.</td>
+        <td class="col" style="vertical-align: middle;">{{ product.price | number }} р.</td>
         <td class="col-2 flex-row">
           <a (click)="decrease(product.id, i)"><i class="fas fa-long-arrow-alt-down"></i></a>
           <a (click)="increase(product.id, i)"><i class="fas fa-long-arrow-alt-up"></i></a>
@@ -34,7 +34,7 @@
                  [(ngModel)]="inputs[i]">
           <!--          <a (click)="addToCart(item.id, i)"><i class="fas fa-cart-plus"></i></a>-->
         </td>
-        <td class="col">{{inputs[i] * product.price}} р.</td>
+        <td class="col">{{inputs[i] * product.price | number}} р.</td>
         <td class="col"><a (click)="deleteItem(product.id, i)"><i class="fas fa-times"></i></a></td>
       </tr>
       <tr class="d-flex text-center">
@@ -43,7 +43,7 @@
         <th class="col-2"></th>
         <th class="col"></th>
         <th class="col-2">Всего:</th>
-        <th class="col">{{ cartSum }} р.</th>
+        <th class="col">{{ cartSum | number}} р.</th>
         <th class="col"></th>
       </tr>
       </tbody>
