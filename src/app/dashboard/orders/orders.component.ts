@@ -17,7 +17,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   bsModalRef: BsModalRef;
   bsModalRefSub: Subscription;
   orderSub: Subscription;
-  orders: Order[];
+  orders: Order[] = [];
   isLoading: boolean;
 
   constructor(

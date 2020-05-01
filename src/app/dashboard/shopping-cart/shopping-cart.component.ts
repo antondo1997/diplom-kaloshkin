@@ -17,7 +17,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   bsModalRef: BsModalRef;
   bsModalRefSub: Subscription;
   products: Product[] = [];
-  // list: { id: string, amount: number }[];
   inputs: number[] = [];
   cartSum = 0;
   cartSub: Subscription;
@@ -31,8 +30,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.list = this.cartService.getCartList();
-    // console.log(this.list);
     this.cartSub = this.cartService.getCartList()
       .subscribe((cartItems) => {
         if (cartItems) {
@@ -82,15 +79,12 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     console.log('Checkout', this.products);
     this.cartService.checkout(this.cartSum)
       .subscribe((data) => {
-        this.cartService.deleteCart();
+        this.cartService.deleteCart().subscribe(() => {
+          this.products.splice(0, this.products.length);
+        });
         this.alertService.success('Заказ успешно оформлен', 3500);
         this.router.navigate(['/dashboard/orders']);
       });
-  }
-
-  deleteCart() {
-    this.cartService.deleteCart();
-
   }
 
   confirmDeleteCart() {

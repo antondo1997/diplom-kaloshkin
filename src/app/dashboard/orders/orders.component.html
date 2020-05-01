@@ -4,11 +4,11 @@
   </div>
   <span class="">Loading...</span>
 </div>
-<div *ngIf="!orders && !isLoading">
+<div *ngIf="!orders.length && !isLoading">
   <h1>Заказов нет</h1>
   <a routerLink="/dashboard">Перейти в прайс-лист</a>
 </div>
-<div class="bg-light border rounded shadow p-3 mb-5 " *ngIf="orders && !isLoading">
+<div class="bg-light border rounded shadow p-3 mb-5 " *ngIf="orders.length && !isLoading">
   <div class="table-responsive">
     <table class="table table-hover">
       <thead class="thead-dark">
@@ -30,14 +30,7 @@
         <td class="col-2"
             style="display: flex;  justify-content: center;  align-content: center; flex-direction: column;">{{ order.totalAmount }}</td>
         <td class="col-1" style="vertical-align: middle;">{{ order.cartSum }} р.</td>
-        <td class="col">
-          Статус обновлен
-          <!--          <a (click)="decrease(i)"><i class="fas fa-long-arrow-alt-down"></i></a>-->
-          <!--          <a (click)="increase(i)"><i class="fas fa-long-arrow-alt-up"></i></a>-->
-          <!--          <input type="number" class="form-control" readonly-->
-          <!--                 [(ngModel)]="inputs[i]">-->
-          <!--          <a (click)="addToCart(item.id, i)"><i class="fas fa-cart-plus"></i></a>-->
-        </td>
+        <td class="col">Статус обновлен</td>
         <td class="col-1">
           <button
             type="button" class="btn btn-danger" style="width: 50px"
