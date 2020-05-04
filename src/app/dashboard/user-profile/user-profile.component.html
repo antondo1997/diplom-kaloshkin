@@ -48,9 +48,86 @@
     <div class="row mb-4">
       <div class="col-sm-4">
         <button type="submit" class="btn btn-success btn-block"
-                [disabled]="form.invalid">Save
+                [disabled]="form.invalid">Сохранить
         </button>
       </div>
+    </div>
+
+  </form>
+</div>
+
+<h3>Изменение пароля <i class="fas fa-lock"></i></h3>
+<div class="col-xl-4 bg-light border rounded shadow p-3 mb-5" *ngIf="!isLoading">
+  <div class="alert alert-danger" *ngIf="profileService.error$ | async as error">
+    {{ error }}
+  </div>
+  <form [formGroup]="formChangePassword" (ngSubmit)="changePassword()">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" [ngClass]="{'was-validated': formChangePassword.get('oldPass').valid}">
+          <label for="oldPass">Старый пароль:</label>
+          <div class="input-group">
+            <input [type]="hideOld ? 'password' : 'text'" id="oldPass" class="form-control" formControlName="oldPass"
+                   data-toogle="password"
+                   [ngClass]="{'is-invalid': formChangePassword.get('oldPass').touched && formChangePassword.get('oldPass').invalid}">
+            <div class="input-group-append">
+              <button class="input-group-text" (click)="hideOld = !hideOld">
+                <i class="fa"
+                   [ngClass]="{'fa-eye': hideOld, 'fa-eye-slash': !hideOld}"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" [ngClass]="{'was-validated': formChangePassword.get('newPass').valid}">
+          <label for="newPass">Новый пароль:</label>
+          <div class="input-group">
+            <input [type]="hideNew ? 'password' : 'text'" id="newPass" class="form-control" formControlName="newPass"
+                   [ngClass]="{'is-invalid': formChangePassword.get('newPass').touched && formChangePassword.get('newPass').invalid}">
+            <div class="input-group-append">
+              <button class="input-group-text" (click)="hideNew = !hideNew">
+                <i class="fa"
+                   [ngClass]="{'fa-eye': hideNew, 'fa-eye-slash': !hideNew}"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group"
+             [ngClass]="{'was-validated': formChangePassword.get('confirmPass').touched && formChangePassword.get('newPass').valid && formChangePassword.get('confirmPass').value === formChangePassword.get('newPass').value }">
+          <label for="confirmPass">Повторить пароль:</label>
+          <div class="input-group">
+            <input
+              [type]="hideConfirm ? 'password' : 'text'" id="confirmPass" class="form-control" formControlName="confirmPass"
+              [ngClass]="{'is-invalid': formChangePassword.get('confirmPass').touched && (formChangePassword.get('confirmPass').invalid || formChangePassword.get('confirmPass').value !== formChangePassword.get('newPass').value)}">
+            <div class="input-group-append">
+              <button class="input-group-text" (click)="hideConfirm = !hideConfirm">
+                <i class="fa"
+                   [ngClass]="{'fa-eye': hideConfirm, 'fa-eye-slash': !hideConfirm}"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+      <button type="submit" class="btn btn-success"
+              [disabled]="formChangePassword.invalid || submitted">
+        Изменить
+      </button>
     </div>
 
   </form>

@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {UserProfile} from '../../shared/interfaces';
-import {Observable} from 'rxjs';
-import {map, take} from 'rxjs/operators';
+import {UserProfile, UserSignIn} from '../../shared/interfaces';
+import {Observable, Subject, throwError} from 'rxjs';
+import {catchError, map, take, tap} from 'rxjs/operators';
 
 @Injectable()
 export class ProfileService {
+
+  public error$: Subject<string> = new Subject<string>();
 
   constructor(
     private http: HttpClient
@@ -31,5 +33,28 @@ export class ProfileService {
     return this.http.patch<UserProfile>(`${environment.databaseURL}/profile/${userProfile.id}.json`, userProfile);
   }
 
+  checkPassword(user: UserSignIn): Observable<any> {
+    return this.http
+      .post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
+        user
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.error$.next('Неправильный старый пароль!');
+          return throwError(error.error.error.message);
+        })
+      );
+  }
+
+  changePassword(newPass: string) {
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${environment.apiKey}`,
+      {
+        idToken: localStorage.getItem('fb-token'),
+        password: newPass,
+        returnSecureToken: true
+      }
+    );
+  }
 
 }

@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   message: string;
+  submitted = false;
 
   constructor(
     public auth: AuthService,
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this.submitted = true;
     const user: UserSignIn = {
       email: this.form.value.email,
       password: this.form.value.password,
@@ -56,7 +58,10 @@ export class LoginComponent implements OnInit {
     };
     this.auth.login(user).subscribe(() => {
       this.form.reset();
+      this.submitted = false;
       this.router.navigate(['/dashboard']);
+    }, error => {
+      this.submitted = false;
     });
   }
 }

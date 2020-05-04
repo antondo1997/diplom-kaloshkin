@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserProfile} from '../../shared/interfaces';
+import {FbAuthResponse, UserProfile, UserSignIn} from '../../shared/interfaces';
 import {ProfileService} from '../services/profile.service';
 import {Router} from '@angular/router';
 import {AlertService} from '../services/alert.service';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,12 +14,17 @@ import {AlertService} from '../services/alert.service';
 export class UserProfileComponent implements OnInit {
 
   form: FormGroup;
+  formChangePassword: FormGroup;
   userProfile: UserProfile;
   phoneMask = ['+', '3', '7', '5', ' ', '(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/];
   isLoading: boolean;
+  submitted = false;
+  hideOld = true;
+  hideNew = true;
+  hideConfirm = true;
 
   constructor(
-    private profileService: ProfileService,
+    public profileService: ProfileService,
     private router: Router,
     private alertService: AlertService
   ) {
@@ -42,6 +48,17 @@ export class UserProfileComponent implements OnInit {
           ]),
           telephone: new FormControl(this.userProfile.telephone, [
             Validators.required, Validators.pattern('[+]375\\s[(]\\d{2}[)]\\s\\d{3}([-]\\d{2}){2}')
+          ]),
+        });
+        this.formChangePassword = new FormGroup({
+          oldPass: new FormControl(null, [
+            Validators.required, Validators.minLength(6)
+          ]),
+          newPass: new FormControl(null, [
+            Validators.required, Validators.minLength(6)
+          ]),
+          confirmPass: new FormControl(null, [
+            Validators.required, Validators.minLength(6)
           ]),
         });
         this.isLoading = false;
@@ -71,5 +88,45 @@ export class UserProfileComponent implements OnInit {
       this.alertService.success('Профиль сохранен', 3000);
       // this.router.navigate()
     });
+  }
+
+  changePassword() {
+    if (this.formChangePassword.invalid) {
+      return;
+    }
+    this.submitted = true;
+    console.log(this.formChangePassword.value);
+    const user: UserSignIn = {
+      email: this.userProfile.email,
+      password: this.formChangePassword.value.oldPass,
+      returnSecureToken: true
+    };
+    this.profileService.checkPassword(user)
+      .subscribe((res: FbAuthResponse) => {
+        // console.log(res);
+        // console.log(localStorage.getItem('fb-token') === res.idToken);
+        // this.setNewToken(res);
+
+        if (res) {
+          localStorage.setItem('fb-token', res.idToken); // new idToken
+          this.profileService.changePassword(this.formChangePassword.value.newPass)
+            .subscribe((response) => {
+              console.log(response);
+              this.profileService.error$.next(null);
+              this.formChangePassword.reset();
+              this.submitted = false;
+              this.alertService.success('Пароль изменен', 3000);
+            });
+        }
+      }, error => {
+        console.log(error);
+        this.submitted = false;
+      });
+  }
+
+  private setNewToken(response: FbAuthResponse | null) {
+    if (response) {
+      localStorage.setItem('fb-token', response.idToken);
+    }
   }
 }
