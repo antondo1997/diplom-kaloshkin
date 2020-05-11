@@ -52,7 +52,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   confirmDeleteOrder(id: string) {
-    const initialState = {type: 'order', id};
+    const initialState = {
+      type: 'order', id,
+      cartList: this.orders.filter((order) => order.id === id)[0].cartList
+    };
+    console.log(this.orders.filter((order) => order.id === id)[0].cartList);
     this.bsModalRef = this.modalService.show(ConfirmModalComponent, {initialState});
     this.bsModalRefSub = this.bsModalRef.content.onClose.subscribe((result: boolean) => {
       if (result) {

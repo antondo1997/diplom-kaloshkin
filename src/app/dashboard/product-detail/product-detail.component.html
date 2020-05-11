@@ -15,8 +15,8 @@
     <div class="col flex-row">
       <a (click)="decrease()"><i class="fas fa-long-arrow-alt-down"></i></a>
       <a (click)="increase()"><i class="fas fa-long-arrow-alt-up"></i></a>
-      <input type="number" class="form-control" readonly
-             [(ngModel)]="input">
+      <input type="text" class="form-control"
+             [(ngModel)]="input" (change)="checkQuantity()">
 <!--      <a (click)="addToCart()"><i class="fas fa-cart-plus"></i></a>-->
       <button type="button" class="btn btn-success mx-2" (click)="addToCart(product.id)">Добавить в корзину</button>
     </div>

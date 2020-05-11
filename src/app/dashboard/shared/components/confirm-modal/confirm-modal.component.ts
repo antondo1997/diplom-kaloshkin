@@ -3,6 +3,9 @@ import {BsModalRef} from 'ngx-bootstrap/modal';
 import {OrderService} from '../../../services/order.service';
 import {Subject} from 'rxjs';
 import {CartService} from '../../../services/cart.service';
+import {CartItem} from '../../../../shared/interfaces';
+import {DatabaseService} from '../../../services/database.service';
+import {switchMap} from 'rxjs/operators';
 
 export type ConfirmType = 'order' | 'cart';
 
@@ -18,15 +21,18 @@ export class ConfirmModalComponent implements OnInit {
   type: ConfirmType;
   id: string;
   question: string;
+  cartList: CartItem[];
 
   constructor(
     public bsModalRef: BsModalRef,
     private orderService: OrderService,
-    private cartService: CartService
+    private cartService: CartService,
+    private dbService: DatabaseService
   ) {
   }
 
   ngOnInit(): void {
+    // console.log(this.cartList);
     switch (this.type) {
       case 'order':
         this.question = 'Вы хотите удалить заказ?';
@@ -40,9 +46,15 @@ export class ConfirmModalComponent implements OnInit {
   onConfirm() {
     switch (this.type) {
       case 'order':
-        this.orderService.delete(this.id).subscribe((res) => {
-          this.onClose.next(true);
-        });
+        this.dbService.delete(this.cartList)
+          .pipe(
+            switchMap(() => {
+              return this.orderService.delete(this.id);
+            })
+          )
+          .subscribe((res) => {
+            this.onClose.next(true);
+          });
         break;
       case 'cart':
         this.cartService.deleteCart().subscribe((res) => {

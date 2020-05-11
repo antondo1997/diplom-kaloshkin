@@ -22,6 +22,7 @@ import {AlertService} from './services/alert.service';
 import {OrderService} from './services/order.service';
 import {OrderDetailComponent} from './orders/order-detail/order-detail.component';
 import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
+import {DatabaseService} from './services/database.service';
 
 registerLocaleData(ruLocale, 'ru');
 
@@ -51,7 +52,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
   ],
   exports: [],
   providers: [
-    CartService, AuthGuard, ProfileService, INTERCEPTOR_PROVIDER, AlertService, OrderService
+    CartService, AuthGuard, ProfileService, INTERCEPTOR_PROVIDER, AlertService, OrderService, DatabaseService
   ]
 })
 export class DashboardModule {

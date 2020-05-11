@@ -6,6 +6,8 @@ import {AlertService} from '../services/alert.service';
 import {Router} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {ConfirmModalComponent} from '../shared/components/confirm-modal/confirm-modal.component';
+import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -25,7 +27,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private alertService: AlertService,
     private router: Router,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private http: HttpClient
   ) {
   }
 
@@ -68,6 +71,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.cartSummary();
   }
 
+  checkQuantity(id: string, idx: number) {
+    if (this.inputs[idx] >= this.products[idx].quantity) {
+      this.inputs[idx] = this.products[idx].quantity;
+    }
+    if (this.inputs[idx] < 1) {
+      this.inputs[idx] = 1;
+    }
+    this.cartService.changeAmount(id, this.inputs[idx]);
+    this.cartSummary();
+  }
+
   cartSummary() {
     this.cartSum = 0;
     this.inputs.forEach((amount, i) => {
@@ -77,6 +91,23 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   checkout() {
     console.log('Checkout', this.products);
+    // const database: { id: string, quantity: number }[] = [
+    //   {id: '0', quantity: 0},
+    //   {id: '1', quantity: 0},
+    //   {id: '2', quantity: 0},
+    //   {id: '3', quantity: 0},
+    //   {id: '4', quantity: 0},
+    //   {id: '5', quantity: 0},
+    //   {id: '6', quantity: 0},
+    //   {id: '7', quantity: 0},
+    //   {id: '8', quantity: 0},
+    //   {id: '9', quantity: 0}
+    // ];
+    // this.http.patch(`${environment.databaseURL}/database.json`, {...database})
+    //   .subscribe((res) => {
+    //     console.log(res);
+    //   });
+
     this.cartService.checkout(this.cartSum)
       .subscribe((data) => {
         this.cartService.deleteCart().subscribe(() => {

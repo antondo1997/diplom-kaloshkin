@@ -3,9 +3,10 @@ import {Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {CartItem, Order} from '../../shared/interfaces';
-import {first, map, tap} from 'rxjs/operators';
+import {first, map, switchMap, tap} from 'rxjs/operators';
 import {AlertService} from './alert.service';
 import {DATABASE} from '../price-list/database';
+import {DatabaseService} from './database.service';
 
 @Injectable()
 export class CartService {
@@ -16,7 +17,8 @@ export class CartService {
 
   constructor(
     private http: HttpClient,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private dbService: DatabaseService
   ) {
   }
 
@@ -90,7 +92,12 @@ export class CartService {
       totalAmount: this.totalAmount(),
       date: new Date()
     };
-    return this.http.post(`${environment.databaseURL}/orders.json`, order);
+    return this.dbService.add(this.cartList)
+      .pipe(
+        switchMap(() => {
+          return this.http.post(`${environment.databaseURL}/orders.json`, order);
+        })
+      );
   }
 
   deleteCart() { // delete cart after checkout

@@ -24,8 +24,8 @@
         <td class="col-2 flex-row" *ngIf="item.quantity > 0">
           <a (click)="decrease(i)"><i class="fas fa-long-arrow-alt-down"></i></a>
           <a (click)="increase(i)"><i class="fas fa-long-arrow-alt-up"></i></a>
-          <input type="number" class="form-control" readonly
-                 [(ngModel)]="inputs[i]">
+          <input type="text" class="form-control"
+                 [(ngModel)]="inputs[i]" (change)="checkQuantity(i)">
           <a (click)="addToCart(item.id, i)"><i class="fas fa-cart-plus"></i></a>
         </td>
       </tr>

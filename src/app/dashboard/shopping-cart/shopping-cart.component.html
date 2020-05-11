@@ -30,8 +30,8 @@
         <td class="col-2 flex-row">
           <a (click)="decrease(product.id, i)"><i class="fas fa-long-arrow-alt-down"></i></a>
           <a (click)="increase(product.id, i)"><i class="fas fa-long-arrow-alt-up"></i></a>
-          <input type="number" class="form-control" style="" readonly
-                 [(ngModel)]="inputs[i]">
+          <input type="text" class="form-control" style=""
+                 [(ngModel)]="inputs[i]" (change)="checkQuantity(product.id, i)">
           <!--          <a (click)="addToCart(item.id, i)"><i class="fas fa-cart-plus"></i></a>-->
         </td>
         <td class="col">{{inputs[i] * product.price | number}} р.</td>

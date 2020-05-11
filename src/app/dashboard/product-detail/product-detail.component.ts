@@ -17,7 +17,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     private cartService: CartService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -34,6 +35,15 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
     this.input--;
+  }
+
+  checkQuantity() {
+    if (this.input >= this.product.quantity) {
+      this.input = this.product.quantity;
+    }
+    if (this.input < 1) {
+      this.input = 1;
+    }
   }
 
   addToCart(id: string) {
